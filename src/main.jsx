@@ -62,6 +62,7 @@ function App() {
   const [note, setNote] = React.useState("");
   const [actionTaken, setActionTaken] = React.useState("");
   const [isIssueOpen, setIsIssueOpen] = React.useState(false);
+  const [initializing, setInitializing] = React.useState(true);
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState("");
 
@@ -91,7 +92,12 @@ function App() {
     api("/api/bootstrap")
       .then(() => (!cancelled ? refresh() : null))
       .catch((err) => !cancelled && setError(err.message))
-      .finally(() => !cancelled && setBusy(false));
+      .finally(() => {
+        if (!cancelled) {
+          setBusy(false);
+          setInitializing(false);
+        }
+      });
     return () => {
       cancelled = true;
     };
@@ -161,6 +167,32 @@ function App() {
 
   const completeCount = days.filter((day) => day.overallStatus === "ok").length;
   const issueCount = days.filter((day) => day.overallStatus === "has_exception").length;
+
+  if (initializing) {
+    return (
+      <main className="app-shell">
+        <section className="top-bar">
+          <div>
+            <p className="eyebrow">Repochan Light</p>
+            <h1>Daily HACCP</h1>
+          </div>
+        </section>
+        <section className="startup-panel">
+          <div className="startup-mark">
+            <ClipboardCheck size={42} />
+          </div>
+          <div>
+            <p className="eyebrow">Starting</p>
+            <h2>Preparing today's records</h2>
+            <p>Repochan is connecting to the checklist and daily HACCP log.</p>
+          </div>
+          <div className="loading-bar" aria-hidden="true">
+            <span />
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="app-shell">

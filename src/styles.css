@@ -28,6 +28,7 @@ textarea {
 
 .top-bar,
 .today-panel,
+.startup-panel,
 .issue-form,
 .calendar-panel,
 .report-panel {
@@ -102,6 +103,70 @@ h2 {
   border-radius: 8px;
   color: #8f2417;
   padding: 12px 14px;
+}
+
+.startup-panel {
+  align-items: center;
+  display: grid;
+  gap: 20px;
+  justify-items: center;
+  margin: 18px auto 0;
+  max-width: 720px;
+  min-height: 360px;
+  padding: 42px;
+  text-align: center;
+}
+
+.startup-mark {
+  align-items: center;
+  background: #e8f6f8;
+  border: 1px solid #cde4e8;
+  border-radius: 50%;
+  color: #62b9c6;
+  display: flex;
+  height: 92px;
+  justify-content: center;
+  width: 92px;
+}
+
+.startup-panel h2 {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.startup-panel p:last-child {
+  color: #52666b;
+  font-size: 1.05rem;
+  margin-bottom: 0;
+}
+
+.loading-bar {
+  background: #edf4f5;
+  border-radius: 999px;
+  height: 10px;
+  max-width: 360px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.loading-bar span {
+  animation: loading-slide 1.35s ease-in-out infinite;
+  background: #f2c335;
+  border-radius: inherit;
+  display: block;
+  height: 100%;
+  width: 42%;
+}
+
+@keyframes loading-slide {
+  0% {
+    transform: translateX(-110%);
+  }
+
+  100% {
+    transform: translateX(250%);
+  }
 }
 
 .today-panel {
