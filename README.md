@@ -2,6 +2,8 @@
 
 Light HACCP logging app for exception-based daily hygiene records.
 
+Front door: https://hanenashi.github.io/repochan/
+
 ## Setup
 
 1. Keep the Firebase service account JSON in the repo root. It is ignored by git.
