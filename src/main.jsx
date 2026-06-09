@@ -26,19 +26,27 @@ const api = (path, options) =>
   });
 
 function monthLabel(month) {
-  const date = new Date(`${month}-01T00:00:00`);
+  const date = new Date(`${month}-01T00:00:00Z`);
   return date.toLocaleDateString(undefined, { month: "long", year: "numeric" });
 }
 
 function getMonthDays(month) {
   const [year, monthNumber] = month.split("-").map(Number);
-  const first = new Date(year, monthNumber - 1, 1);
+  const first = new Date(Date.UTC(year, monthNumber - 1, 1));
   const startOffset = first.getDay();
-  const count = new Date(year, monthNumber, 0).getDate();
+  const count = new Date(Date.UTC(year, monthNumber, 0)).getUTCDate();
   return [
     ...Array.from({ length: startOffset }, () => null),
     ...Array.from({ length: count }, (_, index) => `${month}-${String(index + 1).padStart(2, "0")}`)
   ];
+}
+
+function shiftMonthValue(month, direction) {
+  const [year, monthNumber] = month.split("-").map(Number);
+  const zeroBased = year * 12 + (monthNumber - 1) + direction;
+  const nextYear = Math.floor(zeroBased / 12);
+  const nextMonth = (zeroBased % 12) + 1;
+  return `${nextYear}-${String(nextMonth).padStart(2, "0")}`;
 }
 
 function App() {
@@ -139,9 +147,7 @@ function App() {
   }
 
   function shiftMonth(direction) {
-    const next = new Date(`${month}-01T00:00:00`);
-    next.setMonth(next.getMonth() + direction);
-    const nextMonth = next.toISOString().slice(0, 7);
+    const nextMonth = shiftMonthValue(month, direction);
     setMonth(nextMonth);
     refresh(date, nextMonth).catch((err) => setError(err.message));
   }
