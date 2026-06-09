@@ -36,6 +36,18 @@ Create a Render Web Service from this repository.
 
 For `FIREBASE_SERVICE_ACCOUNT_JSON`, paste the full contents of the local Firebase service account JSON file. Do not commit that JSON file.
 
+## GitHub Pages Wake Screen
+
+The `docs/` folder contains a static wake screen for GitHub Pages. It appears instantly, polls Render, and opens Repochan when the Render service is awake.
+
+In GitHub repository settings, enable Pages with:
+
+- Source: `Deploy from a branch`
+- Branch: `main`
+- Folder: `/docs`
+
+The starter page will be available at `https://hanenashi.github.io/repochan/`.
+
 ## Data Model
 
 - `shops/main-shop`
